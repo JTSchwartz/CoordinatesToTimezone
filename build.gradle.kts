@@ -57,14 +57,6 @@ task<JavaExec>("runFunction") {
     }
 }
 
-task("buildFunction") {
-    dependsOn("build")
-    copy {
-        from("build/libs/${rootProject.name}-$version-all.jar")
-        into("deploy")
-    }
-}
-
 tasks.named("build") {
     dependsOn(":shadowJar")
 }

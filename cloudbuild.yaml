@@ -7,7 +7,7 @@ steps:
       args:
           - -c
           - |
-              gradle buildFunction &&
+              gradle build &&
               mv build/libs/*all.jar /jar
       id: 'Build JAR'
     - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
