@@ -9,7 +9,7 @@ steps:
           - |
               gradle buildFunction &&
               ls -R &&
-              mv deploy /jar/deploy &&
+              mv build/libs/*all.jar /jar &&
               ls -R
       id: 'Build JAR'
     - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -24,7 +24,7 @@ steps:
           - --region=us-central1
           - --trigger-http
           - --allow-unauthenticated
-          - --source=/jar/deploy
+          - --source=/jar
           - --entry-point=com.jtschwartz.coordinatesToTimezone.CoordinatesToTimezone
           - --trigger-http
           - --runtime=java11
