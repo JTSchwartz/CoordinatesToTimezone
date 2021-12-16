@@ -62,7 +62,7 @@ task("buildFunction") {
     dependsOn("build")
     copy {
         from("build/libs/${rootProject.name}-$version-all.jar")
-        into(project.findProperty("deploymentPath") ?: "build/deploy")
+        into("deploy")
     }
 }
 

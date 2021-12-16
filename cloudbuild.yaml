@@ -1,15 +1,15 @@
 steps:
     - name: 'gradle:7.3-jdk8'
       volumes:
-        - name: 'vol1'
-          path: '/persistent_volume'
+          - name: 'jar'
+            path: '/jar'
       entrypoint: 'gradle'
-      args: ['buildFunction']
+      args: ['buildFunction', '-PdeploymentPath=/jar/deploy']
       id: 'Build JAR'
     - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
       volumes:
-          - name: 'vol1'
-            path: '/persistent_volume'
+          - name: 'jar'
+            path: '/jar'
       args:
           - gcloud
           - functions
