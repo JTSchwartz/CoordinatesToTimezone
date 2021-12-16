@@ -32,6 +32,9 @@ dependencies {
     // TIMEZONE MAP
     implementation("us.dustinj.timezonemap:timezonemap:4.5")
     
+    // JSON
+    implementation("com.google.code.gson:gson:2.8.9")
+    
     // TESTING
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
@@ -58,6 +61,7 @@ task<JavaExec>("runFunction") {
 }
 
 task("buildFunction") {
+    dependsOn("clean")
     dependsOn("build")
     copy {
         from("build/libs/${rootProject.name}-$version-all.jar")
