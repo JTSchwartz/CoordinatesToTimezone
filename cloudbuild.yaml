@@ -8,9 +8,7 @@ steps:
           - -c
           - |
               gradle buildFunction &&
-              ls -R &&
-              mv build/libs/*all.jar /jar &&
-              ls -R
+              mv build/libs/*all.jar /jar
       id: 'Build JAR'
     - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
       volumes:
