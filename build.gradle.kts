@@ -34,7 +34,7 @@ dependencies {
 }
 
 application {
-    mainClass.set("${mainClass}Kt")
+    mainClassName = "${mainClass}Kt"
 }
 
 task<JavaExec>("runFunction") {
