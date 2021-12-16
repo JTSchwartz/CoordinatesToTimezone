@@ -1,6 +1,4 @@
-import java.lang.invoke.MethodHandles.invoker
-
-val invoker by configurations.creating
+val invoker: Configuration by configurations.creating
 
 plugins {
     kotlin("jvm") version "1.5.31"
@@ -15,7 +13,6 @@ val name: String by rootProject
 val mainClass = "$group.coordinatesToTimezone.$name"
 
 repositories {
-    jcenter()
     mavenCentral()
 }
 
@@ -65,7 +62,7 @@ task("buildFunction") {
     dependsOn("build")
     copy {
         from("build/libs/${rootProject.name}-$version-all.jar")
-        into("deploy")
+        into(project.findProperty("deploymentPath") ?: "build/deploy")
     }
 }
 
