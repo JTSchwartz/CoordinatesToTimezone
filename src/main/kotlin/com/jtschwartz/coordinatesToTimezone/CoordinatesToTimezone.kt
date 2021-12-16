@@ -14,19 +14,21 @@ class CoordinatesToTimezone : HttpFunction {
 	
 	@Throws(IOException::class)
 	override fun service(request: HttpRequest, response: HttpResponse) {
-		val responseBody = try {
+		val responseBody: JsonObject = try {
 			val requestBody: JsonObject = Gson().fromJson(request.reader, JsonElement::class.java).asJsonObject
 			
 			val latitude = requestBody.parseCoordinate("latitude")
 			val longitude = requestBody.parseCoordinate("longitude")
 			
 			TimeZoneMap.forRegion(latitude - 1.0, longitude - 1.0, latitude + 1.0, longitude + 1.0).run {
-				JsonObject().addProperty("timezone", getOverlappingTimeZone(latitude, longitude)?.zoneId ?: throw RuntimeException("Invalid coordinates"))
+				JsonObject().apply {
+					addProperty("timezone", getOverlappingTimeZone(latitude, longitude)?.zoneId ?: "throw RuntimeException(Invalid coordinates)")
+				}
 			}
 		} catch (e: Exception) {
 			val error = if (e is JsonParseException) "Error parsing JSON" else e.message
 			log.error(e) { error }
-			JsonObject().addProperty("err", error)
+			JsonObject().apply { addProperty("err", error) }
 		}
 		
 		response.writer.write(responseBody.toString())

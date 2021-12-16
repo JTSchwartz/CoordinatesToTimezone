@@ -61,7 +61,7 @@ task<JavaExec>("runFunction") {
 }
 
 task("buildFunction") {
-    dependsOn("clean")
+    delete("deploy")
     dependsOn("build")
     copy {
         from("build/libs/${rootProject.name}-$version-all.jar")
@@ -69,14 +69,6 @@ task("buildFunction") {
     }
 }
 
-task("installGitHook") {
-    copy {
-        from ("scripts/pre-commit")
-        into (".git/hooks")
-        fileMode = 0b111111101
-    }
-}
-
 tasks.named("build") {
-    dependsOn(":shadowJar", ":installGitHook")
+    dependsOn(":shadowJar")
 }
