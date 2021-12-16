@@ -4,7 +4,7 @@ steps:
         - name: 'vol1'
           path: '/persistent_volume'
       entrypoint: 'gradle'
-      args: ['buildFunction', '-PdeploymentPath=/persistent_volume/deploy']
+      args: ['buildFunction']
       id: 'Build JAR'
     - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
       volumes:
@@ -18,7 +18,7 @@ steps:
           - --region=us-central1
           - --trigger-http
           - --allow-unauthenticated
-          - --source=/persistent_volume/deploy
+          - --source=deploy
           - --entry-point=com.jtschwartz.coordinatesToTimezone.CoordinatesToTimezone
           - --trigger-http
           - --runtime=java11
