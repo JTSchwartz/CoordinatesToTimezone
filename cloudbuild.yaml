@@ -8,15 +8,8 @@ steps:
           - -c
           - |
               gradle buildFunction &&
-              mv deploy /jar/deploy
-    - name: 'ubuntu'
-      volumes:
-          - name: 'jar'
-            path: '/jar'
-      entrypoint: 'bash'
-      args:
-          - -c
-          - |
+              ls -R &&
+              mv deploy /jar/deploy &&
               ls -R
       id: 'Build JAR'
     - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
