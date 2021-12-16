@@ -6,6 +6,9 @@ steps:
           - deploy
           - CoordinatesToTimezone
           - --region=us-central1
-          - --source=.
+          - --trigger-http
+          - --allow-unauthenticated
+          - --source=build/deploy
+          - --entry-point=com.jtschwartz.coordinatesToTimezone.CoordinatesToTimezone
           - --trigger-http
           - --runtime=java11

@@ -20,12 +20,19 @@ repositories {
 }
 
 dependencies {
+    // KOTLIN
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("io.github.microutils:kotlin-logging:2.1.16")
+    
+    // CLOUD FUNCTION
     implementation("com.google.cloud.functions:functions-framework-api:1.0.4")
     invoker("com.google.cloud.functions.invoker:java-function-invoker:1.0.3")
     
+    // TIMEZONE MAP
+    implementation("us.dustinj.timezonemap:timezonemap:4.5")
+    
+    // TESTING
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
     testImplementation("org.mockito:mockito-core:4.1.0")
@@ -50,14 +57,22 @@ task<JavaExec>("runFunction") {
     }
 }
 
-tasks.named("build") {
-    dependsOn(":shadowJar")
-}
-
 task("buildFunction") {
     dependsOn("build")
     copy {
-        from("build/libs/" + rootProject.name + "-all.jar")
-        into("build/deploy")
+        from("build/libs/${rootProject.name}-$version-all.jar")
+        into("deploy")
     }
+}
+
+task("installGitHook") {
+    copy {
+        from ("scripts/pre-commit")
+        into (".git/hooks")
+        fileMode = 0b111111101
+    }
+}
+
+tasks.named("build") {
+    dependsOn(":shadowJar", ":installGitHook")
 }
